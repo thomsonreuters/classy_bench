@@ -1,0 +1,134 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "classy-bench"
+dynamic = ["version"]
+description = 'A low-code library for quickly training and evaluating model baselines for Multi Label Classification applications'
+readme = "README.md"
+requires-python = ">=3.8,<3.11"
+license = "MIT"
+keywords = ["nlp", "machine-learning", "classification", "benchmarking"]
+authors = [{ name = "Thomson Reuters Labs" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/thomsonreuters/classy-bench#readme"
+Issues = "https://github.com/thomsonreuters/classy-bench/issues"
+Source = "https://github.com/thomsonreuters/classy-bench"
+
+[tool.hatch.version]
+path = "src/classy_bench/__about__.py"
+
+# Type checking
+[tool.hatch.envs.types]
+extra-dependencies = ["mypy>=1.0.0"]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/classy_bench tests}"
+
+# Linting
+[tool.hatch.envs.lint]
+detached = true
+dependencies = ["black>=24.3.0", "nbqa>=1.8.5", "ruff>=0.3.4"]
+[tool.hatch.envs.lint.scripts]
+style = [
+  "ruff check {args:.}",
+  "black --check --diff {args:.}",
+  "nbqa black --check --diff notebooks/*",
+]
+fmt = [
+  "black {args:.}",
+  "ruff check --fix {args:.}",
+  "nbqa black notebooks/*",
+  "style",
+]
+
+[tool.black]
+target-version = ["py38"]
+line-length = 120
+skip-string-normalization = true
+
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "Q",
+  "RUF",
+  "S",
+  "T",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+ignore = [
+  # Allow non-abstract empty methods in abstract base classes
+  "B027",
+  # Ignore checks for possible passwords
+  "S105",
+  "S106",
+  "S107",
+  # Ignore complexity
+  "C901",
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR0915",
+]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["classy_bench"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+"tests/**/*" = ["PLR2004", "S101", "TID252"]
+
+# Test coverage
+[tool.coverage.run]
+source_pkgs = ["classy_bench", "tests"]
+branch = true
+parallel = true
+omit = ["src/classy_bench/__about__.py"]
+
+[tool.coverage.paths]
+classy_bench = ["src/classy_bench", "*/classy-bench/src/classy_bench"]
+tests = ["tests", "*/classy-bench/tests"]
+
+[tool.coverage.report]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
