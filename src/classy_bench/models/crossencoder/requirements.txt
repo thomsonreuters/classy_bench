@@ -1,0 +1,4 @@
+# No version pinning because HuggingFace containers use different python versions
+# The training container uses python 3.6 and the processing container uses python 3.8
+sentence_transformers
+nltk<3.9.0

@@ -1,0 +1,321 @@
+{
+    "pipeline_list": [
+        {
+            "name": "class_tfidf",
+            "pipeline_type": "class_tfidf",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "tfidf_max_features": "50000"
+                }
+            },
+            "evaluation": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "thresholds": "0.3,0.4,0.5,0.6,0.7,0.8,0.9"
+                }
+            },
+            "metrics_file_names": [
+                "metrics_top_n.csv",
+                "metrics_bm25.csv",
+                "metrics_threshold_0.3.csv",
+                "metrics_threshold_0.4.csv",
+                "metrics_threshold_0.5.csv",
+                "metrics_threshold_0.6.csv",
+                "metrics_threshold_0.7.csv",
+                "metrics_threshold_0.8.csv",
+                "metrics_threshold_0.9.csv"
+            ]
+        },
+        {
+            "name": "doc_tfidf",
+            "pipeline_type": "doc_tfidf",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "tfidf_max_features": "50000"
+                }
+            },
+            "evaluation": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.xlarge",
+                "instance_count": 1,
+                "parameters": {}
+            },
+            "metrics_file_names": [
+                "metrics.csv"
+            ]
+        },
+        {
+            "name": "bm25",
+            "pipeline_type": "bm25",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.xlarge",
+                "instance_count": 1,
+                "parameters": {}
+            },
+            "evaluation": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.xlarge",
+                "instance_count": 1,
+                "parameters": {}
+            },
+            "metrics_file_names": [
+                "metrics.csv"
+            ]
+        },
+        {
+            "name": "biencoder",
+            "pipeline_type": "biencoder",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True",
+                    "num_negative": "10"
+                }
+            },
+            "training": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.p3.2xlarge",
+                "instance_count": 1,
+                "max_runtime_in_hours": 48,
+                "parameters": {
+                    "epochs": "1",
+                    "batch_size": "8",
+                    "base_model": "casehold/custom-legalbert",
+                    "loss": "CosineSimilarityLoss"
+                }
+            },
+            "evaluation": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.p3.2xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "thresholds": "0.3,0.4,0.5,0.6,0.7,0.8,0.9"
+                }
+            },
+            "metrics_file_names": [
+                "metrics_top_train_median.csv",
+                "metrics_threshold_0.3.csv",
+                "metrics_threshold_0.4.csv",
+                "metrics_threshold_0.5.csv",
+                "metrics_threshold_0.6.csv",
+                "metrics_threshold_0.7.csv",
+                "metrics_threshold_0.8.csv",
+                "metrics_threshold_0.9.csv"
+            ]
+        },
+        {
+            "name": "crossencoder",
+            "pipeline_type": "crossencoder",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True",
+                    "num_negative": "10"
+                }
+            },
+            "training": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.p3.2xlarge",
+                "instance_count": 1,
+                "max_runtime_in_hours": 72,
+                "parameters": {
+                    "epochs": "1",
+                    "batch_size": "8",
+                    "base_model": "casehold/custom-legalbert"
+                }
+            },
+            "evaluation": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.p3.2xlarge",
+                "instance_count": 1,
+                "max_runtime_in_hours": 48,
+                "parameters": {
+                    "thresholds": "0.3,0.4,0.5,0.6,0.7,0.8,0.9"
+                }
+            },
+            "metrics_file_names": [
+                "metrics_top_train_median.csv",
+                "metrics_threshold_0.3.csv",
+                "metrics_threshold_0.4.csv",
+                "metrics_threshold_0.5.csv",
+                "metrics_threshold_0.6.csv",
+                "metrics_threshold_0.7.csv",
+                "metrics_threshold_0.8.csv",
+                "metrics_threshold_0.9.csv"
+            ]
+        },
+        {
+            "name": "t5",
+            "pipeline_type": "t5",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.g4dn.xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "model": "t5-small",
+                    "task_prefix": "summarize",
+                    "epochs": "20",
+                    "batch_size": "16",
+                    "early_stopping_patience": "3",
+                    "learning_rate": "1e-4"
+                }
+            },
+            "evaluation": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.g4dn.xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "model": "t5-small",
+                    "task_prefix": "summarize",
+                    "epochs": "20",
+                    "batch_size": "16",
+                    "early_stopping_patience": "3"
+                }
+            },
+            "metrics_file_names": [
+                "metrics_test.csv"
+            ]
+        },
+        {
+            "name": "distilroberta",
+            "pipeline_type": "roberta",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.g4dn.2xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "tokenizer_model_ckpt": "distilroberta-base",
+                    "tokenizer_do_lower_case": "True",
+                    "tokenizer_max_length": "512",
+                    "training_arguments_batch_size": "64",
+                    "training_arguments_lr": "0.0001",
+                    "training_arguments_n_epochs": "35",
+                    "tokenizer_padding": "True",
+                    "training_arguments_loss_func_name": "focal_loss",
+                    "training_arguments_fp16": "True",
+                    "training_arguments_gradient_checkpointing": "True",
+                    "training_arguments_lr_scheduler_type": "cosine",
+                    "training_arguments_evaluation_strategy": "steps",
+                    "training_arguments_log_per_epoch": "2",
+                    "training_arguments_eval_per_epoch": "2",
+                    "training_arguments_eval_thresh": "2",
+                    "training_arguments_early_stopping_patience": "8"
+                }
+            },
+            "evaluation": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.g4dn.2xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "tokenizer_model_ckpt": "distilroberta-base",
+                    "eval_parameters_batch_size": "64",
+                    "eval_parameters_threshold": "0.5"
+                }
+            },
+            "metrics_file_names": [
+                "metrics.csv"
+            ]
+        },
+        {
+            "name": "legalbert",
+            "pipeline_type": "roberta",
+            "preprocessing": {
+                "framework": "SKLearn",
+                "instance_type": "ml.m5.large",
+                "instance_count": 1,
+                "parameters": {
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.g4dn.2xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "tokenizer_model_ckpt": "casehold/custom-legalbert",
+                    "tokenizer_do_lower_case": "True",
+                    "tokenizer_max_length": "512",
+                    "training_arguments_batch_size": "64",
+                    "training_arguments_lr": "0.0001",
+                    "training_arguments_n_epochs": "35",
+                    "tokenizer_padding": "True",
+                    "training_arguments_loss_func_name": "focal_loss",
+                    "training_arguments_fp16": "True",
+                    "training_arguments_gradient_checkpointing": "True",
+                    "training_arguments_lr_scheduler_type": "cosine",
+                    "training_arguments_evaluation_strategy": "steps",
+                    "training_arguments_log_per_epoch": "2",
+                    "training_arguments_eval_per_epoch": "2",
+                    "training_arguments_eval_thresh": "2",
+                    "training_arguments_early_stopping_patience": "8"
+                }
+            },
+            "evaluation": {
+                "framework": "HuggingFace",
+                "instance_type": "ml.g4dn.2xlarge",
+                "instance_count": 1,
+                "parameters": {
+                    "tokenizer_model_ckpt": "casehold/custom-legalbert",
+                    "eval_parameters_batch_size": "64",
+                    "eval_parameters_threshold": "0.5"
+                }
+            },
+            "metrics_file_names": [
+                "metrics.csv"
+            ]
+        }
+    ]
+}
