@@ -7,6 +7,7 @@
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Wiki](#wiki)
 - [Authors](#authors)
 - [Contributing and Support](#contributing-and-support)
 - [License](#license)
@@ -30,6 +31,8 @@ This library was created as part of a research project _"The Right Model for the
 ```console
 pip install git+https://github.com/thomsonreuters/classy_bench.git
 ```
+
+PyPI link coming soon!
 
 ## Usage
 
@@ -61,6 +64,10 @@ pip install git+https://github.com/thomsonreuters/classy_bench.git
   If you are planning to only use custom pipelines, you can set your own rules. :)
 - Provide a `config.json` file that specifies which classifiers you want to run. Please refer the [**Custom Pipeline**](https://github.com/thomsonreuters/classy_bench/wiki/Custom-Pipeline) page for an example on how to set up the config file. We recommend that you start by using the [default_config.json](https://github.com/thomsonreuters/classy_bench/blob/main/src/classy_bench/default_config.json) and adjust it as needed.
 - Run the benchmark as shown in the [`notebooks/example.ipynb`](https://github.com/thomsonreuters/classy_bench/blob/main/notebooks/example.ipynb) notebook.
+
+## Wiki
+
+See the [Wiki](https://github.com/thomsonreuters/classy_bench/wiki) for more information on how to use the library.
 
 ## Authors
 
