@@ -19,9 +19,6 @@
                     "subset": "True",
                     "samples": "1000",
                     "tfidf_max_features": "50000"
-                },
-                "hyper_parameters": {
-                    "NA": "NA"
                 }
             },
             "evaluation": {
