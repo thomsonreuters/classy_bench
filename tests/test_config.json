@@ -1,0 +1,43 @@
+{
+    "pipeline_list": [
+        {
+            "name": "my-pipeline",
+            "pipeline_type": "class_tfidf",
+            "preprocessing": {
+                "instanceType": "ml.m5.large",
+                "instanceCount": 1,
+                "parameters": {
+                    "subset": "True",
+                    "samples": "1000",
+                    "preprocess": "True"
+                }
+            },
+            "training": {
+                "instanceType": "ml.m5.xlarge",
+                "instanceCount": 1,
+                "parameters": {
+                    "subset": "True",
+                    "samples": "1000",
+                    "tfidf_max_features": "50000"
+                },
+                "hyper_parameters": {
+                    "NA": "NA"
+                }
+            },
+            "evaluation": {
+                "instanceType": "ml.m5.large",
+                "instanceCount": 1,
+                "parameters": {
+                    "subset": "True",
+                    "samples": "1000",
+                    "thresholds": "0.3,0.4,0.5,0.6,0.7,0.8,0.9"
+                }
+            },
+            "s3_input_data_uri": "s3://abcdef/data/input/",
+            "s3_input_model_uri": "s3://abcdef/model/input/",
+            "metrics_file_names": [
+                "metrics.csv"
+            ]
+        }
+    ]
+}
